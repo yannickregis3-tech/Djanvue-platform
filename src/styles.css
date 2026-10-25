@@ -15,3 +15,5 @@
 .comment-form input:focus{border-color:#6a9d8b;box-shadow:0 0 0 3px #6a9d8b1c}
 .comment-form .primary-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
 @media(max-width:560px){.comments-panel{margin:0 12px 14px;padding:12px}.comment-form{flex-direction:column}.comment-form .primary-button{align-self:flex-end}}
+
+.follow-button{border:1px solid var(--line,#dce5e2);border-radius:999px;padding:7px 12px;background:#fff;color:var(--ink,#19332e);font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}.follow-button:hover{background:#edf7f3;border-color:#9ac7b8}.follow-button:disabled{opacity:.55;cursor:wait}
