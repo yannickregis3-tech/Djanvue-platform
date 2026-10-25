@@ -85,3 +85,5 @@
 .dm-profile-results{margin:12px 0;padding:12px;border:1px solid #e5efeb;border-radius:12px}
 .dm-profile-results .community-request-row{gap:8px}
 @media(max-width:700px){.dm-layout{grid-template-columns:1fr}.dm-conversation-list{max-height:240px;overflow:auto}.dm-search-form,.dm-send-form{align-items:stretch;flex-direction:column}.dm-search-form .primary-button,.dm-send-form .primary-button{align-self:flex-end}.dm-center{padding:14px}}
+
+.dm-live-status{display:inline-block;margin-left:8px;font-size:10px;font-weight:700;color:#17845d}.dm-message.mine time{color:#527c6a}
