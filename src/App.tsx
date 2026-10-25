@@ -2,7 +2,8 @@ import { useEffect, useState, type FormEvent } from "react";
 import { Activity, Bell, Bookmark, Check, Compass, Globe2, Heart, ImagePlus, LoaderCircle, LockKeyhole, Mail, MessageCircle, Plus, Search, Send, ShieldCheck, Sparkles, Users, X } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
 import { isSupabaseConfigured, supabase } from "./lib/supabase";
-type CommentRow = {id:string;body:string;created_at:string;author_id:string;profiles?:{display_name?:string;username?:string}|{display_name?:string;username?:string}[]};\ntype Post = {id:string;name:string;handle:string;place:string;time:string;initials:string;color:string;text:string;tags:string[];likes:number;comments:number};
+type CommentRow = {id:string;body:string;created_at:string;author_id:string;profiles?:{display_name?:string;username?:string}|{display_name?:string;username?:string}[]};
+type Post = {id:string;name:string;handle:string;place:string;time:string;initials:string;color:string;text:string;tags:string[];likes:number;comments:number};
 const examples:Post[]=[
 {id:"demo-1",name:"Aminata Koné",handle:"@aminata.k",place:"Abidjan, Côte d’Ivoire",time:"12 min",initials:"AK",color:"peach",text:"On construit de belles choses quand on partage nos idées. 🌍 Quelle initiative locale vous a donné de l’espoir cette semaine ?",tags:["#AfriqueQuiInspire","#Communauté"],likes:28,comments:6},
 {id:"demo-2",name:"Malick Diop",handle:"@malick.crea",place:"Dakar, Sénégal",time:"38 min",initials:"MD",color:"blue",text:"Petit rappel : votre talent n’a pas besoin de permission pour commencer. Faites le premier pas, même petit. ✨",tags:["#Créativité","#OnAvance"],likes:43,comments:12},
