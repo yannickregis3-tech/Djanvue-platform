@@ -87,3 +87,7 @@
 @media(max-width:700px){.dm-layout{grid-template-columns:1fr}.dm-conversation-list{max-height:240px;overflow:auto}.dm-search-form,.dm-send-form{align-items:stretch;flex-direction:column}.dm-search-form .primary-button,.dm-send-form .primary-button{align-self:flex-end}.dm-center{padding:14px}}
 
 .dm-live-status{display:inline-block;margin-left:8px;font-size:10px;font-weight:700;color:#17845d}.dm-message.mine time{color:#527c6a}
+
+
+/* Media attached to DJANVUƐ posts */
+.media-selection{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;margin:8px 0;border:1px solid var(--line,#dce5e1);border-radius:12px;background:var(--surface,#f8fbfa);font-size:13px;overflow-wrap:anywhere}.media-selection button{display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;cursor:pointer;padding:5px;border-radius:8px}.post-media{display:block;width:100%;max-height:560px;object-fit:contain;border-radius:14px;margin:12px 0;background:#f2f5f4}.composer-tools button{cursor:pointer}
