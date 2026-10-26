@@ -14,12 +14,14 @@ type Post = {
   media_type?: string | null;
   created_at: string;
   updated_at?: string;
+  author?: { id: string; username: string | null; display_name: string | null; avatar_url: string | null } | null;
 };
 
 const visibilityLabels = { public: "Public", followers: "Abonnés", private: "Privé" };
 
 export default function FeedPage() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [body, setBody] = useState("");
   const [visibility, setVisibility] = useState<Post["visibility"]>("public");
   const [loading, setLoading] = useState(true);
@@ -37,6 +39,7 @@ export default function FeedPage() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Impossible de charger le fil.");
       setPosts(result.posts ?? []);
+      setCurrentUserId(result.currentUserId ?? null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Une erreur est survenue.");
     } finally {
@@ -138,10 +141,10 @@ export default function FeedPage() {
           {loading ? <div className="feed-state"><LoaderCircle className="spin" size={24} /><span>Chargement des publications…</span></div> :
             posts.length === 0 ? <div className="feed-empty"><div className="feed-empty-icon"><MessageCircle size={24} /></div><h3>Le début de quelque chose.</h3><p>Aucune publication à afficher pour le moment. Partage la première idée.</p></div> :
             <div className="post-list">{posts.map((post) => <article className="post-card" key={post.id}>
-              <div className="post-top"><div className="avatar-placeholder small">Ɛ</div><div className="post-author"><strong>Utilisateur DJANVUƐ</strong><span>{new Date(post.created_at).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })} · {visibilityLabels[post.visibility]}</span></div><button type="button" className="icon-button" aria-label="Options de la publication" onClick={() => { setEditingId(editingId === post.id ? null : post.id); setEditBody(post.body ?? ""); }}><MoreHorizontal size={20} /></button></div>
+              <div className="post-top"><div className="avatar-placeholder small">{post.author?.avatar_url ? <img src={post.author.avatar_url} alt="" /> : (post.author?.display_name || post.author?.username || "Ɛ").slice(0, 1).toUpperCase()}</div><div className="post-author"><strong>{post.author?.display_name || (post.author?.username ? `@${post.author.username}` : "Membre DJANVUƐ")}</strong><span>{new Date(post.created_at).toLocaleString("fr-FR", { dateStyle: "medium", timeStyle: "short" })} · {visibilityLabels[post.visibility]}</span></div>{post.author_id === currentUserId && <button type="button" className="icon-button" aria-label="Modifier la publication" onClick={() => { setEditingId(editingId === post.id ? null : post.id); setEditBody(post.body ?? ""); }}><MoreHorizontal size={20} /></button>}</div>
               {editingId === post.id ? <div className="edit-post"><textarea aria-label="Modifier la publication" value={editBody} maxLength={5000} onChange={(event) => setEditBody(event.target.value)} rows={4}/><div className="edit-actions"><button type="button" className="text-button" onClick={() => setEditingId(null)}>Annuler</button><button type="button" className="button-primary" onClick={() => void saveEdit(post.id)}>Enregistrer</button></div></div> : <p className="post-body">{post.body}</p>}
               {(post.media_urls?.length || post.media_url) ? <div className="post-media-note"><ImagePlus size={16} /> Média associé à cette publication</div> : null}
-              <div className="post-actions"><span><MessageCircle size={16} /> Conversation</span><button type="button" className="delete-post-button" onClick={() => void deletePost(post.id)}><Trash2 size={15} /> Supprimer</button></div>
+              <div className="post-actions"><span><MessageCircle size={16} /> Conversation</span>{post.author_id === currentUserId && <button type="button" className="delete-post-button" onClick={() => void deletePost(post.id)}><Trash2 size={15} /> Supprimer</button>}</div>
             </article>)}</div>
           }
         </section>
