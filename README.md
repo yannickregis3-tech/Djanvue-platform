@@ -1,24 +1,25 @@
-# DJANVUƐ — Social platform
+# DJANVUƐ — plateforme sociale et cloud
 
-Frontend built with React, TypeScript and Vite. Backend: Supabase Auth and PostgreSQL with Row Level Security.
+## Architecture en cours de migration
 
-## Local development
-1. Install Node.js 20.19+ or 22.12+.
-2. Run `npm install`.
-3. Copy `.env.example` to `.env.local` and set the Supabase URL and publishable key.
-4. Run `npm run dev`; run `npm run build` before shipping.
+La branche `architecture/nextjs-postgres-r2` introduit le socle cible **Next.js App Router + TypeScript + Tailwind CSS**, avec des adaptateurs serveur PostgreSQL et Cloudflare R2.
 
-Never place a Supabase service-role key in browser variables. Use only the publishable key in the frontend; enforce access with database RLS.
+La migration est progressive : l'application React/Vite historique reste dans le dépôt pour référence et ne doit pas être supprimée avant l'audit et la migration des fonctionnalités.
 
-## Current scope
-- Responsive light UI for desktop and mobile.
-- Supabase email/password sign-up and sign-in.
-- Authenticated text-post creation stored in Supabase.
-- Example feed content is demo data until live feed queries are completed.
-- Communities and notification panels are interface previews for the next phase.
+## Démarrage local du nouveau socle
 
-## Roadmap
-1. Complete profile onboarding, RLS review and integration tests.
-2. Live feed, likes, comments, follows and privacy behavior.
-3. Community membership and notifications.
-4. Cloudflare R2 media adapter, moderation and end-to-end tests.
+1. Utiliser une version de Node.js compatible avec Next.js 16 (Node.js 20.9 ou plus récente).
+2. Installer les dépendances : `npm install`.
+3. Copier `.env.example` vers `.env.local`, puis renseigner les variables nécessaires côté serveur.
+4. Lancer `npm run dev`.
+5. Vérifier `npm run lint` et `npm run build` avant de déployer.
+
+Ne jamais committer `.env.local`. Les variables `DATABASE_URL`, `R2_ACCESS_KEY_ID` et `R2_SECRET_ACCESS_KEY` sont strictement serveur et ne doivent jamais être préfixées par `NEXT_PUBLIC_`.
+
+## Sécurité et état des fonctions
+
+- Le client PostgreSQL et l'adaptateur R2 sont isolés côté serveur.
+- Le code d'initialisation ne constitue pas encore une API de fichiers : chaque route devra authentifier l'utilisateur, vérifier sa propriété en base et n'émettre une URL signée qu'après autorisation.
+- La stratégie d'authentification doit être arrêtée après audit de Supabase Auth, des tables et des politiques RLS existantes.
+- Le nouveau frontend est un socle visuel; il ne prétend pas encore offrir le feed connecté, la messagerie persistante ou les uploads.
+- Voir `docs/ARCHITECTURE-MIGRATION.md` pour les phases, les critères de sécurité et les conditions de bascule.
