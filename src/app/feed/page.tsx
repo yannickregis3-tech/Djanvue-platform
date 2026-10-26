@@ -44,7 +44,10 @@ export default function FeedPage() {
     }
   }, []);
 
-  useEffect(() => { void loadPosts(); }, [loadPosts]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void loadPosts(); }, 0);
+    return () => window.clearTimeout(timer);
+  }, [loadPosts]);
 
   async function createPost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
