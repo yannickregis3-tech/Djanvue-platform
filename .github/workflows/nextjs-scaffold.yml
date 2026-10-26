@@ -1,0 +1,30 @@
+name: Next.js scaffold checks
+
+on:
+  push:
+    branches:
+      - architecture/nextjs-postgres-r2
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Lint Next.js scaffold
+        run: npm run lint
+      - name: Build Next.js app
+        run: npm run build
+        env:
+          # Build must not require live service credentials for the public landing page.
+          NEXT_TELEMETRY_DISABLED: 1
