@@ -182,22 +182,44 @@ create policy comments_update_self on public.comments for update to authenticate
 drop policy if exists comments_delete_self on public.comments;
 create policy comments_delete_self on public.comments for delete to authenticated using (author_id = (select auth.uid()));
 
+-- SECURITY DEFINER helpers avoid recursive RLS evaluation on conversation_members.
+create or replace function public.is_conversation_member(target_conversation_id uuid)
+returns boolean language sql stable security definer set search_path = ''
+as $
+  select exists (
+    select 1 from public.conversation_members cm
+    where cm.conversation_id = target_conversation_id and cm.user_id = (select auth.uid())
+  );
+$;
+create or replace function public.is_conversation_creator(target_conversation_id uuid)
+returns boolean language sql stable security definer set search_path = ''
+as $
+  select exists (
+    select 1 from public.conversations c
+    where c.id = target_conversation_id and c.created_by = (select auth.uid())
+  );
+$;
+revoke all on function public.is_conversation_member(uuid) from public;
+revoke all on function public.is_conversation_creator(uuid) from public;
+grant execute on function public.is_conversation_member(uuid) to authenticated;
+grant execute on function public.is_conversation_creator(uuid) to authenticated;
+
 -- A member can see only conversations they belong to.
 drop policy if exists conversations_select_member on public.conversations;
-create policy conversations_select_member on public.conversations for select to authenticated using (exists (select 1 from public.conversation_members cm where cm.conversation_id = id and cm.user_id = (select auth.uid())));
+create policy conversations_select_member on public.conversations for select to authenticated using (public.is_conversation_member(id));
 drop policy if exists conversations_insert_creator on public.conversations;
 create policy conversations_insert_creator on public.conversations for insert to authenticated with check (created_by = (select auth.uid()));
 drop policy if exists members_select_same_conversation on public.conversation_members;
-create policy members_select_same_conversation on public.conversation_members for select to authenticated using (exists (select 1 from public.conversation_members cm where cm.conversation_id = conversation_id and cm.user_id = (select auth.uid())));
+create policy members_select_same_conversation on public.conversation_members for select to authenticated using (public.is_conversation_member(conversation_id));
 drop policy if exists members_insert_self on public.conversation_members;
-create policy members_insert_self on public.conversation_members for insert to authenticated with check (user_id = (select auth.uid()) or exists (select 1 from public.conversations c where c.id = conversation_id and c.created_by = (select auth.uid())));
+create policy members_insert_self on public.conversation_members for insert to authenticated with check (user_id = (select auth.uid()) or public.is_conversation_creator(conversation_id));
 drop policy if exists members_update_self on public.conversation_members;
 create policy members_update_self on public.conversation_members for update to authenticated using (user_id = (select auth.uid())) with check (user_id = (select auth.uid()));
 
 drop policy if exists messages_select_member on public.messages;
-create policy messages_select_member on public.messages for select to authenticated using (exists (select 1 from public.conversation_members cm where cm.conversation_id = conversation_id and cm.user_id = (select auth.uid())));
+create policy messages_select_member on public.messages for select to authenticated using (public.is_conversation_member(conversation_id));
 drop policy if exists messages_insert_member on public.messages;
-create policy messages_insert_member on public.messages for insert to authenticated with check (sender_id = (select auth.uid()) and exists (select 1 from public.conversation_members cm where cm.conversation_id = conversation_id and cm.user_id = (select auth.uid())));
+create policy messages_insert_member on public.messages for insert to authenticated with check (sender_id = (select auth.uid()) and public.is_conversation_member(conversation_id));
 drop policy if exists messages_update_sender on public.messages;
 create policy messages_update_sender on public.messages for update to authenticated using (sender_id = (select auth.uid())) with check (sender_id = (select auth.uid()));
 drop policy if exists messages_delete_sender on public.messages;
