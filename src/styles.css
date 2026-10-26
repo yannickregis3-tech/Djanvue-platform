@@ -108,7 +108,7 @@
 .module-card p{font-size:12px;line-height:1.65;color:#7a8793;margin:0 0 22px}
 .module-card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;font-size:10px;font-weight:800;letter-spacing:.7px;color:#9aa7ad}
 .module-card-foot span{font-size:16px;color:#13836b}
-.app-shell[data-view="Résonance"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Live"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="DCloud Vault"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Portefeuille"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Paramètres"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Explorer"] .feed-wrap>:not(.module-hub):not(.notice){display:none}
+/* Do not hide functional feed content behind navigation placeholder cards. */
 .app-shell[data-view="Résonance"] .rightbar,.app-shell[data-view="Live"] .rightbar,.app-shell[data-view="DCloud Vault"] .rightbar,.app-shell[data-view="Portefeuille"] .rightbar,.app-shell[data-view="Paramètres"] .rightbar{opacity:.65}
 @media(max-width:1000px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.module-hub{padding:22px 18px}}
 @media(max-width:600px){.module-grid{grid-template-columns:1fr}.module-hero{padding:25px 22px;border-radius:21px}.module-hub{padding:18px 13px 32px}.module-card{min-height:175px}}
