@@ -91,3 +91,24 @@
 
 /* Media attached to DJANVUƐ posts */
 .media-selection{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;margin:8px 0;border:1px solid var(--line,#dce5e1);border-radius:12px;background:var(--surface,#f8fbfa);font-size:13px;overflow-wrap:anywhere}.media-selection button{display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;cursor:pointer;padding:5px;border-radius:8px}.post-media{display:block;width:100%;max-height:560px;object-fit:contain;border-radius:14px;margin:12px 0;background:#f2f5f4}.composer-tools button{cursor:pointer}
+
+
+/* DJANVUƐ modular product spaces — frontend foundation */
+.module-hub{padding:28px 30px 42px;max-width:1040px;margin:0 auto;}
+.module-hero{position:relative;overflow:hidden;padding:34px 36px;border-radius:26px;background:radial-gradient(circle at 92% 8%,#b6f2df 0,transparent 30%),linear-gradient(135deg,#f1fbf7 0%,#fff 62%,#f4f7ff 100%);border:1px solid #dfeee8;box-shadow:0 16px 48px #1b604c0a}
+.module-kicker{font-size:11px;font-weight:800;letter-spacing:1.8px;color:#14816b;margin-bottom:14px}
+.module-hero h1{font:800 clamp(27px,3vw,42px)/1.12 Manrope,sans-serif;letter-spacing:-1.5px;color:#1e2e3a;max-width:660px;margin:0 0 14px}
+.module-hero p{max-width:600px;line-height:1.75;font-size:14px;color:#697887;margin:0 0 22px}
+.module-status{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#e3f7ef;color:#14765f;font-size:11px;font-weight:700}
+.module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+.module-card{display:flex;flex-direction:column;min-height:204px;padding:22px;border:1px solid #e6ecef;border-radius:20px;background:#fff;box-shadow:0 8px 26px #20384906;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.module-card:hover{transform:translateY(-3px);border-color:#b8e5d7;box-shadow:0 14px 34px #2038490d}
+.module-icon{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:#e9f8f2;color:#12836b;margin-bottom:17px}
+.module-card h3{font:750 16px Manrope,sans-serif;color:#263644;margin:0 0 8px}
+.module-card p{font-size:12px;line-height:1.65;color:#7a8793;margin:0 0 22px}
+.module-card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;font-size:10px;font-weight:800;letter-spacing:.7px;color:#9aa7ad}
+.module-card-foot span{font-size:16px;color:#13836b}
+.app-shell[data-view="Résonance"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Live"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="DCloud Vault"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Portefeuille"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Paramètres"] .feed-wrap>:not(.module-hub):not(.notice),.app-shell[data-view="Explorer"] .feed-wrap>:not(.module-hub):not(.notice){display:none}
+.app-shell[data-view="Résonance"] .rightbar,.app-shell[data-view="Live"] .rightbar,.app-shell[data-view="DCloud Vault"] .rightbar,.app-shell[data-view="Portefeuille"] .rightbar,.app-shell[data-view="Paramètres"] .rightbar{opacity:.65}
+@media(max-width:1000px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.module-hub{padding:22px 18px}}
+@media(max-width:600px){.module-grid{grid-template-columns:1fr}.module-hero{padding:25px 22px;border-radius:21px}.module-hub{padding:18px 13px 32px}.module-card{min-height:175px}}
