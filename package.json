@@ -6,7 +6,7 @@
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start --hostname 0.0.0.0",
-    "lint": "eslint ."
+    "lint": "eslint src/app src/lib"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.850.0",
