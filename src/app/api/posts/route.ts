@@ -34,7 +34,23 @@ export async function GET(request: NextRequest) {
       console.error("GET /api/posts:", error.message);
       return NextResponse.json({ error: "Impossible de charger les publications." }, { status: 500 });
     }
-    return NextResponse.json({ posts: data ?? [], nextCursor: data?.length === limit ? data[data.length - 1]?.created_at ?? null : null });
+    const rows = data ?? [];
+    const authorIds = [...new Set(rows.map((post) => post.author_id))];
+    const { data: profiles, error: profilesError } = authorIds.length
+      ? await supabase.from("profiles").select("id, username, display_name, avatar_url").in("id", authorIds)
+      : { data: [], error: null };
+
+    if (profilesError) {
+      console.error("GET /api/posts profiles:", profilesError.message);
+    }
+    const profileById = new Map((profiles ?? []).map((profile) => [profile.id, profile]));
+    const posts = rows.map((post) => ({ ...post, author: profileById.get(post.author_id) ?? null }));
+
+    return NextResponse.json({
+      posts,
+      currentUserId: user.id,
+      nextCursor: rows.length === limit ? rows[rows.length - 1]?.created_at ?? null : null,
+    });
   } catch (error) {
     console.error("GET /api/posts configuration:", error);
     return NextResponse.json({ error: "Service temporairement indisponible." }, { status: 503 });
