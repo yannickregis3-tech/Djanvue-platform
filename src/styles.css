@@ -112,3 +112,34 @@
 .app-shell[data-view="Résonance"] .rightbar,.app-shell[data-view="Live"] .rightbar,.app-shell[data-view="DCloud Vault"] .rightbar,.app-shell[data-view="Portefeuille"] .rightbar,.app-shell[data-view="Paramètres"] .rightbar{opacity:.65}
 @media(max-width:1000px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.module-hub{padding:22px 18px}}
 @media(max-width:600px){.module-grid{grid-template-columns:1fr}.module-hero{padding:25px 22px;border-radius:21px}.module-hub{padding:18px 13px 32px}.module-card{min-height:175px}}
+
+
+/* Social feed refinement: clearer hierarchy, comfortable reading, responsive media */
+.feed-wrap{gap:22px}
+.welcome-row{margin-bottom:2px}
+.composer.card{align-items:flex-start;gap:15px;padding:22px;border:1px solid #e5eeeb;border-radius:22px;box-shadow:0 10px 34px rgba(27,63,54,.045)}
+.composer-form{min-width:0}
+.composer-form textarea{min-height:86px;resize:vertical;line-height:1.65;padding:13px 14px;border-radius:14px;background:#fbfdfc;border:1px solid #edf1ef;transition:border-color .18s,box-shadow .18s}
+.composer-form textarea:focus{outline:none;border-color:#8ed8c0;box-shadow:0 0 0 3px rgba(33,164,126,.1)}
+.composer-footer{gap:12px;flex-wrap:wrap;margin-top:12px}
+.composer-tools{display:flex;gap:8px;flex-wrap:wrap}
+.composer-tools button{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 12px;border-radius:11px;background:#f4f8f6;color:#53665f;font-size:12px;font-weight:650;transition:background .18s,color .18s}
+.composer-tools button:hover{background:#e6f6ef;color:#14785e}
+.publish-button{border-radius:12px;min-height:40px;padding:0 17px}
+.feed-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:4px 2px 0}
+.feed-heading h2{letter-spacing:-.5px}
+.post-list{gap:16px}
+.post-card.card{padding:22px;border-radius:21px;border:1px solid #e8eeec;box-shadow:0 7px 28px rgba(29,56,49,.035);transition:border-color .18s,box-shadow .18s}
+.post-card.card:hover{border-color:#d4e9e1;box-shadow:0 12px 32px rgba(29,56,49,.06)}
+.post-top{gap:12px}
+.post-author{min-width:0}
+.author-meta{overflow-wrap:anywhere}
+.post-text{font-size:14px;line-height:1.8;color:#34434b;white-space:pre-wrap;overflow-wrap:anywhere;margin:15px 0}
+.post-media{display:block;width:100%;max-height:640px;object-fit:contain;background:#f4f7f6;border-radius:16px;margin:12px 0 16px}
+video.post-media{aspect-ratio:auto}
+.post-actions{border-top:1px solid #f0f3f2;padding-top:10px;margin-top:12px;gap:8px}
+.post-actions button{min-width:42px;min-height:38px;border-radius:11px;transition:background .16s,color .16s}
+.post-actions button:hover{background:#f1f8f5}
+.post-actions button.liked{background:#fff0f1;color:#d94b64}
+.media-selection{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:12px;background:#eef8f3;color:#376657;font-size:12px;overflow-wrap:anywhere}
+@media(max-width:600px){.composer.card{padding:15px;gap:10px}.composer-form textarea{min-height:74px}.composer-footer{align-items:stretch}.composer-tools{width:100%}.composer-tools button{flex:1;padding:10px 8px;font-size:11px}.publish-button{width:100%;justify-content:center}.post-card.card{padding:16px;border-radius:17px}.post-media{border-radius:12px;max-height:460px}.post-text{font-size:13.5px}.post-actions{justify-content:space-between}}
